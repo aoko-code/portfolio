@@ -1,0 +1,54 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!-- ================================
+Start SEO blocks
+================================= -->
+{% block title %}Cynthia Aoko - home{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+<!-- ================================
+END SEO blocks
+================================= -->
+
+<!-- ================================
+Start CSS blocks
+================================= -->
+{% block extend_header %}{% endblock %}
+<!-- ================================
+END CSS blocks
+================================= -->
+
+<!-- ================================
+Start script blocks
+================================= -->
+{% block extend_footer %}{% endblock %}
+<!-- ================================
+END script blocks
+================================= -->
+<!-- Portfolio Start -->
+{% block content %}
+ <div class="portfolio" id="portfolio">
+    <div class="container">
+        <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
+            <p>See my recent projects below</p>
+        </div>
+        <div class="row portfolio-container">
+            <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-1 wow fadeInUp" data-wow-delay="0.0s">
+                {% for obj in object_list %}
+                <div class="portfolio-wrap">
+                    <div class="portfolio-img">
+                        <img src="{{obj.image.url}}" alt="Image">
+                    </div>
+                    
+                    <div class="portfolio-text">
+                        <a class="btn" href="{% url 'main:portfolio' slug=obj.slug %}"data-lightbox="portfolio">+</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{%endblock%}
+<!-- Portfolio End -->

@@ -1,0 +1,241 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+<!-- ================================
+Start SEO blocks
+================================= -->
+{% block title %}Cynthia Aoko - home{% endblock %}
+{% block decription %}{% endblock %}
+{% block keywords %}{% endblock %}
+<!-- ================================
+END SEO blocks
+================================= -->
+
+<!-- ================================
+Start CSS blocks
+================================= -->
+{% block extend_header %}{% endblock %}
+<!-- ================================
+END CSS blocks
+================================= -->
+
+<!-- ================================
+Start script blocks
+================================= -->
+{% block extend_footer %}{% endblock %}
+<!-- ================================
+END script blocks
+================================= -->
+<!-- start content -->
+
+{% block content %}
+    <!-- Hero Start -->
+    <div class="hero" id="home">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="hero-content">
+                            <div class="hero-text">
+                                <h1 class="xlTitle pb-3">Hi, I’m {{me.first_name|title}},  </h1>
+                                <h2></h2>
+                                <div class="typed-text">a {{me.userprofile.title}}</div>
+                                <p>{{me.userprofile.bio}}</p>
+                            </div>
+                            <div class="hero-btn">
+                                <a download href="{{me.userprofile.cv.url}}" class="btn btnPrimary">Download Resume</a>
+                                <a href="{% url 'main:contact' %}" class="btn btnOutline">Contact</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 d-none d-md-block">
+                        <div class="hero-image">
+                            <img src="{{me.userprofile.avatar.url}}" alt="{{me.first_name|title}} {{me.last_name|title}} avatar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <!-- Hero End -->
+
+        <!-- skill Start -->
+        <div class="about wow fadeInUp" data-wow-delay="0.1s" id="about">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <div class="section-header text-left">
+                                <p>Learn About Me</p> 
+                                <h4 class="smTitle pb-3">Key Skills</h4>
+                                {% for sk in me.userprofile.skills.all %}
+                                {% if sk.is_key_skill %}
+                            </div>
+                            
+                            <div class="skills">
+                                {% if sk.image %}
+                                <div class="skill-name">
+                                    <div class="ksIconCol">
+                                        <img src="{{sk.image.url}}" alt="...">
+                                      </div>
+                                      {% endif %}
+                                    <span class="skill-Text">{{sk.name}}</span>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                
+                            </div>
+                            <a class="btn" href="">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="about-content">
+                            <div class="section-header text-left">
+                                <h4 class="smTitle pb-3">Coding Skills</h4>
+                                {% for sk in me.userprofile.skills.all %}
+                                {% if not sk.is_key_skill %}
+                            </div>
+                            <div class="skills">
+                                <div class="skill-name">
+                                    <p>{{sk.name}}</p><p>{{sk.score}}</p>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar"style="width: {{sk.score}}%" aria-valuenow="{{sk.score}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <a class="btn" href="">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- skill End -->
+         
+        <!-- Certificate Start -->
+        <!-- <div class="service" id="service">
+            <div class="container">
+                <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
+                    <p>Certificates</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.0s">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="fa fa-laptop"></i>
+                            </div>
+                            {% for c in certificates %}
+                            {% if c.is_active %}
+                            <div class="service-text">
+                                <a href="javascript:void(0)">{{c.title}}</a>
+                                <ul class="cardOptionCol">
+                                    <h6>{{c.date.date}}</h6>
+                                    <h6>{{c.name|title}}</h6>
+                                <p>{{c.description}}</p>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- certificate End -->
+        
+        <!-- Portfolio Start -->
+        <!-- <div class="portfolio" id="portfolio">
+            <div class="container">
+                <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
+                    <p>Featured work</p>
+                </div>
+                <div class="col-auto">
+                    <a href="{% url 'main:portfolios' %}" class="btn btnPrimary">View all</a>
+                  </div>
+                  {% for p in portfolio %}
+                  {% if p.is_active %}
+                <div class="row portfolio-container">
+                    <div class="col-lg-4 col-md-6 col-sm-12 portfolio-item filter-1 wow fadeInUp" data-wow-delay="0.0s">
+                        <div class="portfolio-wrap">
+                            <div class="portfolio-img">
+                                <img src="{% url 'main:portfolio' slug=p.slug %}"  src="{{p.image.url}}" alt="Image">
+                            </div>
+                            
+                            <div class="portfolio-text">
+                                <h3>{{p.name}}</h3>
+                                <a class="btn" href="{% url 'main:portfolio' slug=p.slug %}" data-lightbox="portfolio">+</a>
+                                <h3>{{p.date.year}}</h3>
+                                <p>{{p.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div> -->
+        <!-- Portfolio End -->
+        
+        <!-- Testimonial Start -->
+        <div class="testimonial wow fadeInUp" data-wow-delay="0.1s" id="review">
+            <div class="container">
+                <div class="testimonial-icon">
+                    <i class="fa fa-quote-left"></i>
+                </div>
+                <div class="owl-carousel testimonials-carousel">
+                    {% for t in testimonials %}
+                    {% if t.is_active %}
+                    <div class="testimonial-item">
+                        <div class="testimonial-img">
+                            <img src="{{t.thumbnail.url}}" alt="Image">
+                        </div>
+                        <div class="testimonial-text">
+                            <p>{{t.quote}}</p>
+                            <h3>{{t.name}}</h3>
+                            <h4>{{t.role}}</h4>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+
+        <!-- Blog Start -->
+        <!-- <div class="blog" id="blog">
+            <div class="container">
+                <div class="section-header text-center wow zoomIn" data-wow-delay="0.1s">
+                    <p>From Blog</p>
+                    <h2>Latest Articles</h2>
+                </div>
+                <div class="col-auto">
+                    <a href="{% url 'main:blogs' %}" class="btn">View all</a>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        {% for b in blogs %}
+                        {% if b.is_active %}
+                        <div class="blog-item wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="blog-img">
+                                <img src="{% url 'main:blog' slug=b.slug %}" alt="Blog">
+                            </div>
+                            <div class="blog-text">
+                                <h2>{{b.name}}</h2>
+                                <div class="blog-meta">
+                                    <p><i class="far fa-user"></i>{{b.author}}</p>
+                                    <p><i class="far fa-list-alt"></i>{{b.name}}</p>
+                                    <p><i class="far fa-calendar-alt"></i>{{b.timestamp.date}}</p>
+                                    
+                                </div>
+                                <p>{{b.description}}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div> -->
+        <!-- Blog End -->
+        {% endblock %}
+        <!-- end content  -->
